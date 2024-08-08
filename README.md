@@ -108,6 +108,15 @@ php artisan key:generate
 php artisan migrate
 ```
 
+6. Execute os tests:
+
+```sh
+php artisan test --testsuite=Feature
+```
+
+![alt text](image-1.png)
+
+
 Certifique-se de que o servidor do banco de dados está em execução e as credenciais configuradas no arquivo `.env` estão corretas.
 
 ### 7. Acessar a Aplicação em Ambiente de Teste
