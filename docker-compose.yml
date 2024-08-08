@@ -1,0 +1,49 @@
+version: "3.7"
+
+services:
+  app:
+    build:
+      args:
+        user: domingos
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: paciente/laravel-app
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    restart: unless-stopped
+    networks:
+      - paciente-laravel
+
+  #nginx
+  nginx:
+    image: nginx:alpine
+    restart: always
+    ports:
+      - 8080:80
+      - 444:444
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/:/etc/nginx/conf.d/
+    networks:
+      - paciente-laravel
+
+  #db psql
+  postgres:
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_ROOT_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    volumes:
+      - ./.docker/postgres/data:/var/lib/postgresql/data
+    ports:
+        - "5432:5432"
+    networks:
+      - paciente-laravel
+
+networks:
+  paciente-laravel:
+    driver: bridge
