@@ -87,7 +87,7 @@ docker-compose up -d
 2. Acesse o terminal interativo do container Laravel:
 
 ```sh
-docker-compose exec -it nome_container_da_imagem_paciente/laravel-app bash
+docker-compose exec -it app bash
 ```
 
 3. Instale as dependências do Projecto usando o Composer
